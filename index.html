@@ -31,10 +31,20 @@
         .category-header { color: var(--primary); font-size: 0.9rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px; }
         .saved-item { display: flex; justify-content: space-between; font-size: 0.95rem; color: var(--text-muted); padding: 3px 0; }
         .saved-item span:last-child { color: #ef4444; cursor: pointer; }
-        #description-box { margin-top: 15px; background: rgba(51, 65, 85, 0.6); padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); text-align: left; font-size: 0.9rem; color: #cbd5e1; min-height: 40px; }
+        #description-box { margin-top: 15px; background: rgba(51, 65, 85, 0.6); padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); text-align: left; font-size: 0.9rem; color: #cbd5e1; min-height: 60px; }
         #image-container { margin-top: 15px; height: 200px; display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 12px; border: 2px solid var(--glass-border); background: rgba(15, 23, 42, 0.4); }
         #creature-image { max-width: 100%; max-height: 100%; object-fit: cover; display: none; }
         .no-image-placeholder { color: var(--text-muted); font-size: 3rem; opacity: 0.3; }
+        
+        /* Download Button Style */
+        .action-btn {
+            background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border);
+            color: var(--text-main); padding: 6px 12px; border-radius: 6px;
+            cursor: pointer; font-size: 0.85rem; margin-left: 8px; transition: all 0.2s;
+        }
+        .action-btn:hover { background: var(--primary); border-color: var(--primary); color: white; }
+        .action-btn.danger { border-color: #ef4444; color: #ef4444; }
+        .action-btn.danger:hover { background: #ef4444; color: white; }
     </style>
 </head>
 <body>
@@ -45,14 +55,19 @@
     <select id="generator-selector" class="selector" onchange="changeGenerator()"></select>
     <button class="generate-btn" onclick="generateNames()">✨ Generate 10 Names</button>
     <div id="result-list"></div>
+    
     <div id="saved-section">
-        <h3 style="margin:0 0 10px 0; color:var(--accent); font-size:1rem; display:flex; justify-content:space-between;">
-            Saved Collection
-            <button class="save-btn" style="margin:0; border-color:#ef4444; color:#ef4444;" onclick="clearSavedNames()">Clear All</button>
+        <h3 style="margin:0 0 10px 0; color:var(--accent); font-size:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+            <span>Saved Collection</span>
+            <div style="display:flex; gap:5px;">
+                <button class="action-btn" onclick="downloadSavedNames()">⬇ Download .txt</button>
+                <button class="action-btn danger" onclick="clearSavedNames()">Clear All</button>
+            </div>
         </h3>
         <div id="saved-list-container"></div>
     </div>
-    <div id="description-box"><strong>Info:</strong> <span id="desc-text">Loading data...</span></div>
+
+    <div id="description-box"><strong>About:</strong> <span id="desc-text">Select a generator to begin.</span></div>
     <div id="image-container">
         <span class="no-image-placeholder" id="img-placeholder">🖼️</span>
         <img id="creature-image" src="" alt="Creature">
@@ -68,7 +83,7 @@
 
     fetch(DATA_URL)
         .then(response => { if (!response.ok) throw new Error("Network error"); return response.json(); })
-        .then(data => { allData = data; isDataLoaded = true; initUI(); renderSavedNames(); })
+        .then(data => { allData = data; isDataLoaded = true; initUI(); })
         .catch(error => { document.getElementById('desc-text').innerText = "Error loading data."; });
 
     function initUI() {
@@ -95,13 +110,29 @@
         currentCategory = document.getElementById('generator-selector').value;
         document.querySelectorAll('.switch-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.category === currentCategory));
         document.getElementById('result-list').innerHTML = '';
-        document.getElementById('desc-text').innerHTML = '';
-        const img = document.getElementById('creature-image'); img.src = ""; img.style.display = 'none';
-        document.getElementById('img-placeholder').style.display = 'block';
+        const img = document.getElementById('creature-image'); 
+        const placeholder = document.getElementById('img-placeholder');
+        img.src = ""; img.style.display = 'none';
+        placeholder.style.display = 'block';
+
         const title = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
         document.getElementById('page-title').innerText = title + " Generator";
-        const descs = { horse: "Coat color & personality.", treant: "Tree species & ancient.", artifact: "Elemental & legendary.", centaur: "Equine & warrior.", mermaid: "Ocean & marine.", elf: "Melodic & nature.", dragon: "Fire & scales.", twilek: "Ryloth sounds.", togruta: "Shili sounds.", faun: "Goat & forest.", conutaur: "Celestial & centaur." };
-        document.getElementById('desc-text').innerHTML = descs[currentCategory] || "Fantasy names.";
+        
+        const descs = {
+            horse: "Domesticated ungulates known for speed, strength, and loyalty.",
+            treant: "Sentient, ancient tree beings that guard forests.",
+            artifact: "Magical items, weapons, or relics imbued with supernatural powers.",
+            centaur: "Mythological hybrids: human upper body, horse lower body. Skilled warriors.",
+            mermaid: "Aquatic beings: human upper body, fish tail. Dwell in oceans.",
+            elf: "Immortal humanoids with pointed ears. Masters of magic and nature.",
+            dragon: "Massive reptilian creatures with scales, wings, and elemental breath.",
+            twilek: "Near-human species from Ryloth with two head-tails (lekku).",
+            togruta: "Near-human species from Shili with montrals, lekku, and facial markings.",
+            faun: "Forest spirits: human upper body, goat legs and horns. Lovers of music.",
+            conutaur: "Rare hybrid: centaur body with a unicorn's spiraled horn."
+        };
+        document.getElementById('desc-text').innerHTML = `<strong>${title}:</strong> ${descs[currentCategory] || "Fantasy creatures."}`;
+        generateNames();
     }
 
     function generateNames() {
@@ -114,8 +145,6 @@
         for (let i = 0; i < 10; i++) {
             const s = starts[Math.floor(Math.random() * starts.length)];
             const e = ends[Math.floor(Math.random() * ends.length)];
-            
-            // FORCE COMPOUND FORMAT: No "of", just direct combination
             const name = `${s}${e}`;
             
             const isSaved = savedNames.some(item => item.name === name && item.category === currentCategory);
@@ -124,11 +153,7 @@
             const btn = document.createElement('button');
             btn.className = `save-btn ${isSaved ? 'saved' : ''}`;
             btn.innerHTML = isSaved ? '★ Saved' : '☆ Save';
-            // Attach click event directly without reloading page
-            btn.onclick = function(e) { 
-                e.stopPropagation(); // Prevent bubbling
-                toggleSaveState(name, currentCategory, btn); 
-            };
+            btn.onclick = function(e) { e.stopPropagation(); toggleSaveState(name, currentCategory, btn); };
             
             div.innerHTML = `<span>${name}</span>`; 
             div.appendChild(btn); 
@@ -137,7 +162,6 @@
         loadRandomImage(currentCategory);
     }
 
-    // Helper to toggle state without regenerating list
     function toggleSaveState(name, category, btnElement) {
         const index = savedNames.findIndex(item => item.name === name && item.category === category);
         if (index > -1) {
@@ -154,15 +178,12 @@
     }
 
     function toggleSave(name, category) {
-        // Fallback for saved list deletion
         const index = savedNames.findIndex(item => item.name === name && item.category === category);
         if (index > -1) savedNames.splice(index, 1); else savedNames.push({ name, category });
         localStorage.setItem('fantasyNamesSaved', JSON.stringify(savedNames));
         renderSavedNames();
-        // Optional: Update buttons in main list if visible, but not regenerate names
         const buttons = document.querySelectorAll('.save-btn');
         buttons.forEach(btn => {
-            // Find the name associated with this button (previous sibling span)
             const nameSpan = btn.previousElementSibling;
             if(nameSpan && nameSpan.innerText === name) {
                 const isNowSaved = savedNames.some(i => i.name === name && i.category === category);
@@ -194,17 +215,71 @@
 
     function clearSavedNames() { if(confirm("Clear all?")) { savedNames = []; localStorage.removeItem('fantasyNamesSaved'); renderSavedNames(); } }
 
+    // --- DOWNLOAD FUNCTION ---
+    function downloadSavedNames() {
+        if (savedNames.length === 0) {
+            alert("No names saved to download!");
+            return;
+        }
+
+        // Group names by category
+        const grouped = {};
+        savedNames.forEach(item => {
+            if (!grouped[item.category]) grouped[item.category] = [];
+            grouped[item.category].push(item.name);
+        });
+
+        // Build text content
+        let content = "FANTASY NAME GENERATOR - SAVED COLLECTION\n";
+        content += "Generated on: " + new Date().toLocaleDateString() + "\n";
+        content += "==========================================\n\n";
+
+        for (const [cat, names] of Object.entries(grouped)) {
+            const title = cat.charAt(0).toUpperCase() + cat.slice(1);
+            content += `--- ${title} Names ---\n`;
+            names.forEach(name => {
+                content += `${name}\n`;
+            });
+            content += "\n";
+        }
+
+        // Create blob and download
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'fantasy-names-saved.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+
     function loadRandomImage(category) {
-        const img = document.getElementById('creature-image'); const placeholder = document.getElementById('img-placeholder');
-        img.style.display = 'none'; placeholder.style.display = 'none';
-        const valid = []; let count = 0;
-        for(let i=1; i<=10; i++) {
+        const img = document.getElementById('creature-image'); 
+        const placeholder = document.getElementById('img-placeholder');
+        img.style.display = 'none'; 
+        placeholder.style.display = 'none';
+        const valid = []; 
+        let count = 0;
+        const maxImages = 10;
+        for(let i=1; i<=maxImages; i++) {
             const t = new Image();
             t.onload = () => { valid.push(`${category}${i}.jpg`); check(); };
             t.onerror = () => check();
             t.src = `${category}${i}.jpg`;
         }
-        function check() { count++; if(count===10) { if(valid.length>0) { img.src = valid[Math.floor(Math.random()*valid.length)]; img.style.display = 'block'; } else { placeholder.style.display = 'block'; } } }
+        function check() { 
+            count++; 
+            if(count === maxImages) { 
+                if(valid.length > 0) { 
+                    img.src = valid[Math.floor(Math.random() * valid.length)]; 
+                    img.style.display = 'block'; 
+                } else { 
+                    placeholder.style.display = 'block'; 
+                } 
+            } 
+        }
     }
 </script>
 </body>
