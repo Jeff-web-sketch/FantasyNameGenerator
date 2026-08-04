@@ -106,28 +106,70 @@
 
     function generateNames() {
         if (!isDataLoaded) return;
-        const list = document.getElementById('result-list'); list.innerHTML = '';
-        const starts = allData[currentCategory].starts; const ends = allData[currentCategory].ends;
+        const list = document.getElementById('result-list'); 
+        list.innerHTML = '';
+        const starts = allData[currentCategory].starts; 
+        const ends = allData[currentCategory].ends;
+        
         for (let i = 0; i < 10; i++) {
             const s = starts[Math.floor(Math.random() * starts.length)];
             const e = ends[Math.floor(Math.random() * ends.length)];
-            const name = Math.random() > 0.5 ? `${s}${e}` : `${s} of ${e}`;
+            
+            // FORCE COMPOUND FORMAT: No "of", just direct combination
+            const name = `${s}${e}`;
+            
             const isSaved = savedNames.some(item => item.name === name && item.category === currentCategory);
             const div = document.createElement('div'); div.className = 'name-item';
+            
             const btn = document.createElement('button');
             btn.className = `save-btn ${isSaved ? 'saved' : ''}`;
             btn.innerHTML = isSaved ? '★ Saved' : '☆ Save';
-            btn.onclick = function() { toggleSave(name, currentCategory); };
-            div.innerHTML = `<span>${name}</span>`; div.appendChild(btn); list.appendChild(div);
+            // Attach click event directly without reloading page
+            btn.onclick = function(e) { 
+                e.stopPropagation(); // Prevent bubbling
+                toggleSaveState(name, currentCategory, btn); 
+            };
+            
+            div.innerHTML = `<span>${name}</span>`; 
+            div.appendChild(btn); 
+            list.appendChild(div);
         }
         loadRandomImage(currentCategory);
     }
 
+    // Helper to toggle state without regenerating list
+    function toggleSaveState(name, category, btnElement) {
+        const index = savedNames.findIndex(item => item.name === name && item.category === category);
+        if (index > -1) {
+            savedNames.splice(index, 1);
+            btnElement.innerHTML = '☆ Save';
+            btnElement.classList.remove('saved');
+        } else {
+            savedNames.push({ name, category });
+            btnElement.innerHTML = '★ Saved';
+            btnElement.classList.add('saved');
+        }
+        localStorage.setItem('fantasyNamesSaved', JSON.stringify(savedNames));
+        renderSavedNames();
+    }
+
     function toggleSave(name, category) {
+        // Fallback for saved list deletion
         const index = savedNames.findIndex(item => item.name === name && item.category === category);
         if (index > -1) savedNames.splice(index, 1); else savedNames.push({ name, category });
         localStorage.setItem('fantasyNamesSaved', JSON.stringify(savedNames));
-        renderSavedNames(); generateNames();
+        renderSavedNames();
+        // Optional: Update buttons in main list if visible, but not regenerate names
+        const buttons = document.querySelectorAll('.save-btn');
+        buttons.forEach(btn => {
+            // Find the name associated with this button (previous sibling span)
+            const nameSpan = btn.previousElementSibling;
+            if(nameSpan && nameSpan.innerText === name) {
+                const isNowSaved = savedNames.some(i => i.name === name && i.category === category);
+                btn.innerHTML = isNowSaved ? '★ Saved' : '☆ Save';
+                btn.classList.toggle('saved', isNowSaved);
+            }
+        });
     }
 
     function renderSavedNames() {
@@ -150,7 +192,7 @@
         }
     }
 
-    function clearSavedNames() { if(confirm("Clear all?")) { savedNames = []; localStorage.removeItem('fantasyNamesSaved'); renderSavedNames(); generateNames(); } }
+    function clearSavedNames() { if(confirm("Clear all?")) { savedNames = []; localStorage.removeItem('fantasyNamesSaved'); renderSavedNames(); } }
 
     function loadRandomImage(category) {
         const img = document.getElementById('creature-image'); const placeholder = document.getElementById('img-placeholder');
