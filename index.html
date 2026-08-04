@@ -8,6 +8,7 @@
         :root {
             --primary: #38bdf8;
             --primary-hover: #0ea5e9;
+            --accent: #f472b6;
             --bg-overlay: rgba(15, 23, 42, 0.85);
             --glass-bg: rgba(30, 41, 59, 0.7);
             --glass-border: rgba(255, 255, 255, 0.1);
@@ -16,209 +17,148 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: url('bg.png') no-repeat center center fixed;
             background-size: cover;
             color: var(--text-main);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
         }
 
-        /* Dark overlay to ensure text readability over bg.png */
         body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-overlay);
-            z-index: -1;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-overlay); z-index: -1;
         }
 
         .container {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            text-align: center;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             border: 1px solid var(--glass-border);
             animation: slideUp 0.6s ease-out;
+            margin-bottom: 20px;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            border-bottom: 2px solid var(--glass-border);
-            padding-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: 1px;
+        h1 { color: var(--primary); margin: 0 0 1rem 0; font-size: 1.8rem; text-align: center; }
+
+        /* Search Bar */
+        .search-box {
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.6);
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
         }
+        .search-box:focus { border-color: var(--primary); }
+
+        /* Quick Switcher */
+        .quick-switch {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        .switch-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .switch-btn:hover, .switch-btn.active {
+            background: var(--primary); color: white; border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .switch-btn.hidden { display: none; }
 
         .selector {
-            margin-bottom: 20px;
-            padding: 12px 15px;
-            border-radius: 10px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--glass-border);
-            color: white;
-            font-size: 1.1rem;
-            width: 100%;
-            cursor: pointer;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            appearance: none; /* Remove default arrow */
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2338bdf8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px top 50%;
-            background-size: 12px auto;
+            margin-bottom: 15px; padding: 12px; border-radius: 10px;
+            background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border);
+            color: white; font-size: 1.1rem; width: 100%; cursor: pointer; outline: none;
         }
 
-        .selector:hover, .selector:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
-        }
-
-        .selector option {
-            background: #0f172a;
-            color: white;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            margin: 15px 0 10px;
-            border-radius: 10px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
+        .generate-btn {
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: none;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: white;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: white; transition: transform 0.2s;
         }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
+        .generate-btn:hover { transform: translateY(-2px); }
 
         #result-list {
-            margin-top: 20px;
-            text-align: left;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--glass-border);
-            max-height: 250px;
-            overflow-y: auto;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+            margin-top: 15px; text-align: left; background: rgba(15, 23, 42, 0.6);
+            padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border);
+            max-height: 300px; overflow-y: auto;
         }
-
-        /* Custom Scrollbar */
-        #result-list::-webkit-scrollbar {
-            width: 8px;
-        }
-        #result-list::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.2);
-            border-radius: 4px;
-        }
-        #result-list::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-
         .name-item {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--glass-border);
-            font-size: 1.15rem;
-            color: #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            animation: fadeIn 0.3s ease-in;
+            padding: 10px; border-bottom: 1px solid var(--glass-border);
+            font-size: 1.1rem; color: #e2e8f0; display: flex;
+            justify-content: space-between; align-items: center;
         }
         .name-item:last-child { border-bottom: none; }
-        .name-item span { font-weight: bold; color: var(--primary); }
+        
+        .save-btn {
+            background: transparent; border: 1px solid var(--text-muted);
+            color: var(--text-muted); padding: 4px 8px; border-radius: 5px;
+            cursor: pointer; font-size: 0.8rem; margin-left: 10px; transition: all 0.2s;
+        }
+        .save-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(244, 114, 182, 0.1); }
+        .save-btn.saved { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* Saved Section with Categories */
+        #saved-section {
+            margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.4);
+            padding: 15px; border-radius: 10px; border: 1px dashed var(--glass-border);
+            max-height: 300px; overflow-y: auto;
+        }
+        .category-group { margin-bottom: 15px; }
+        .category-header {
+            color: var(--primary); font-size: 0.9rem; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;
+        }
+        .saved-item {
+            display: flex; justify-content: space-between; font-size: 0.95rem;
+            color: var(--text-muted); padding: 3px 0;
+        }
+        .saved-item span:last-child { color: #ef4444; cursor: pointer; }
 
         #description-box {
-            margin-top: 20px;
-            background: rgba(51, 65, 85, 0.6);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid var(--primary);
-            text-align: left;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #cbd5e1;
-            min-height: 60px;
+            margin-top: 15px; background: rgba(51, 65, 85, 0.6); padding: 12px;
+            border-radius: 8px; border-left: 4px solid var(--primary);
+            text-align: left; font-size: 0.9rem; color: #cbd5e1; min-height: 40px;
         }
-        #description-box h3 { margin-top: 0; color: var(--primary); font-size: 1.1rem; }
 
         #image-container {
-            margin-top: 20px;
-            height: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            border-radius: 12px;
-            border: 2px solid var(--glass-border);
-            background: rgba(15, 23, 42, 0.4);
-            position: relative;
+            margin-top: 15px; height: 200px; display: flex; justify-content: center;
+            align-items: center; overflow: hidden; border-radius: 12px;
+            border: 2px solid var(--glass-border); background: rgba(15, 23, 42, 0.4);
         }
-
-        #creature-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: cover;
-            display: none;
-            animation: zoomIn 0.5s ease-out;
-        }
-
-        /* Placeholder icon when no image */
-        .no-image-placeholder {
-            color: var(--text-muted);
-            font-size: 3rem;
-            opacity: 0.3;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-
-        .back-btn {
-            background: rgba(71, 85, 105, 0.5);
-            margin-top: 15px;
-            font-size: 0.9rem;
-            padding: 10px;
-        }
-        .back-btn:hover {
-            background: rgba(71, 85, 105, 0.8);
-            box-shadow: none;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 1.5rem; }
-            h1 { font-size: 1.5rem; }
-            #image-container { height: 200px; }
-        }
+        #creature-image { max-width: 100%; max-height: 100%; object-fit: cover; display: none; }
+        .no-image-placeholder { color: var(--text-muted); font-size: 3rem; opacity: 0.3; }
     </style>
 </head>
 <body>
@@ -226,153 +166,246 @@
 <div class="container">
     <h1 id="page-title">Loading...</h1>
     
-<select id="generator-selector" class="selector" onchange="changeGenerator()">
-    <option value="horse">Horse Names</option>
-    <option value="treant">Tree People Names</option>
-    <option value="artifact">Special Item Names</option>
-    <option value="centaur">Centaur Names</option>
-    <option value="mermaid">Mermaid Names</option>
-    <option value="conutaur">Conutaur Names</option>
-    <option value="elf">Elf Names</option>
-    <option value="twilek">Twi'lek Names</option>
-    <option value="togruta">Togruta Names</option>
-    <option value="faun">Faun Names</option>
-    <option value="dragon">Dragon Names</option>
-</select>   
+    <!-- Search Bar -->
+    <input type="text" id="search-input" class="search-box" placeholder="🔍 Search generators (e.g., Dragon, Elf)..." onkeyup="filterGenerators()">
 
-    <button onclick="generateNames()">✨ Generate 10 Names</button>
+    <!-- Quick Switcher -->
+    <div class="quick-switch" id="quick-switch-container"></div>
+
+    <select id="generator-selector" class="selector" onchange="changeGenerator()"></select>
+
+    <button class="generate-btn" onclick="generateNames()">✨ Generate 10 Names</button>
     
     <div id="result-list"></div>
-    
-    <div id="description-box">
-        <h3 id="desc-title">Info</h3>
-        <p id="desc-text">Loading data...</p>
+
+    <!-- Categorized Saved Names -->
+    <div id="saved-section">
+        <h3 style="margin:0 0 10px 0; color:var(--accent); font-size:1rem; display:flex; justify-content:space-between;">
+            Saved Collection
+            <button class="save-btn" style="margin:0; border-color:#ef4444; color:#ef4444;" onclick="clearSavedNames()">Clear All</button>
+        </h3>
+        <div id="saved-list-container"></div>
     </div>
+    
+    <div id="description-box"><strong>Info:</strong> <span id="desc-text">Loading data...</span></div>
     
     <div id="image-container">
         <span class="no-image-placeholder" id="img-placeholder">🖼️</span>
         <img id="creature-image" src="" alt="Creature">
     </div>
-    
-    <button class="back-btn" onclick="window.location.reload()">↻ Refresh Page</button>
 </div>
 
 <script>
     const DATA_URL = "https://jeff-web-sketch.github.io/FantasyNameGenerator/data.json";
-    
     let allData = {};
     let currentCategory = "horse";
+    let isDataLoaded = false;
+    // Store as objects: { name: "FireDrake", category: "dragon" }
+    let savedNames = JSON.parse(localStorage.getItem('fantasyNamesSaved')) || [];
 
     fetch(DATA_URL)
         .then(response => {
-            if (!response.ok) throw new Error("Network response was not ok.");
+            if (!response.ok) throw new Error("Network error");
             return response.json();
         })
         .then(data => {
             allData = data;
-            initGenerator();
+            isDataLoaded = true;
+            initUI();
+            renderSavedNames();
         })
         .catch(error => {
-            console.error("Error fetching data:", error);
-            document.getElementById('desc-text').innerText = "Error: Could not load data.json. Ensure GitHub Pages is enabled.";
-            document.getElementById('page-title').innerText = "Connection Error";
+            document.getElementById('desc-text').innerText = "Error loading data.";
         });
 
-    function initGenerator() {
+    function initUI() {
+        const switchContainer = document.getElementById('quick-switch-container');
+        const select = document.getElementById('generator-selector');
+        const categories = Object.keys(allData);
+
+        categories.forEach(cat => {
+            // Add to Dropdown
+            const opt = document.createElement('option');
+            opt.value = cat;
+            opt.innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
+            select.appendChild(opt);
+
+            // Add to Quick Switch
+            const btn = document.createElement('button');
+            btn.className = 'switch-btn';
+            btn.innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
+            btn.dataset.category = cat;
+            btn.onclick = () => {
+                select.value = cat;
+                changeGenerator();
+            };
+            switchContainer.appendChild(btn);
+        });
+
         changeGenerator();
     }
 
-    function changeGenerator() {
-        currentCategory = document.getElementById('generator-selector').value;
-        const data = allData[currentCategory];
+    function filterGenerators() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const buttons = document.querySelectorAll('.switch-btn');
         
-        if (!data) return;
+        buttons.forEach(btn => {
+            const name = btn.innerText.toLowerCase();
+            if (name.includes(query)) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        });
+    }
+
+    function changeGenerator() {
+        if (!isDataLoaded) return;
+        currentCategory = document.getElementById('generator-selector').value;
+        
+        // Update Active Button
+        document.querySelectorAll('.switch-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.category === currentCategory);
+        });
+
+        // Clear UI
+        document.getElementById('result-list').innerHTML = '';
+        document.getElementById('desc-text').innerHTML = '';
+        const img = document.getElementById('creature-image');
+        img.src = ""; img.style.display = 'none';
+        document.getElementById('img-placeholder').style.display = 'block';
 
         const title = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
         document.getElementById('page-title').innerText = title + " Generator";
-        document.getElementById('desc-title').innerText = title;
         
-        let desc = "";
-        if(currentCategory === "horse") desc = "Names reflecting coat color, personality, or majestic titles.";
-        if(currentCategory === "treant") desc = "Names combining tree species with ancient titles or body parts.";
-        if(currentCategory === "artifact") desc = "Names using elemental adjectives and legendary nouns.";
-        if(currentCategory === "centaur") desc = "Names blending equine strength with warrior or nature themes.";
-        if(currentCategory === "mermaid") desc = "Names evoking the ocean, tides, and marine life.";
-        if(currentCategory === "conutaur") desc = "Names mixing celestial unicorn magic with centaur power.";
-        if(currentCategory === "elf") desc = "Melodic names inspired by nature, stars, and ancient lore.";
-if(currentCategory === "twilek") desc = "Names from Ryloth, often featuring soft vowels and lekku-inspired sounds.";
-if(currentCategory === "togruta") desc = "Names from Shili, often with sharp consonants and monastic influences.";
-if(currentCategory === "faun") desc = "Names blending goat-like traits with forest and nature themes.";
-if(currentCategory === "dragon") desc = "Names evoking fire, scales, wings, and ancient power.";   
-
-        document.getElementById('result-list').innerHTML = '';
-        const imgElement = document.getElementById('creature-image');
-        const placeholder = document.getElementById('img-placeholder');
-        imgElement.style.display = 'none';
-        imgElement.src = "";
-        placeholder.style.display = 'block';
+        const descs = {
+            horse: "Coat color & personality titles.",
+            treant: "Tree species & ancient titles.",
+            artifact: "Elemental adjectives & legendary nouns.",
+            centaur: "Equine strength & warrior themes.",
+            mermaid: "Ocean, tides & marine life.",
+            elf: "Melodic, nature & star inspired.",
+            dragon: "Fire, scales, wings & power.",
+            twilek: "Ryloth sounds & lekku styles.",
+            togruta: "Shili sounds & monastic styles.",
+            faun: "Goat traits & forest themes.",
+            conutaur: "Celestial magic & centaur power."
+        };
+        document.getElementById('desc-text').innerHTML = descs[currentCategory] || "Fantasy names.";
     }
 
     function generateNames() {
-        if (!allData[currentCategory]) return;
-        
-        const resultList = document.getElementById('result-list');
-        resultList.innerHTML = '';
+        if (!isDataLoaded) return;
+        const list = document.getElementById('result-list');
+        list.innerHTML = '';
         const starts = allData[currentCategory].starts;
         const ends = allData[currentCategory].ends;
 
         for (let i = 0; i < 10; i++) {
-            const randomStart = starts[Math.floor(Math.random() * starts.length)];
-            const randomEnd = ends[Math.floor(Math.random() * ends.length)];
+            const s = starts[Math.floor(Math.random() * starts.length)];
+            const e = ends[Math.floor(Math.random() * ends.length)];
+            const name = Math.random() > 0.5 ? `${s}${e}` : `${s} of ${e}`;
+            
+            const isSaved = savedNames.some(item => item.name === name && item.category === currentCategory);
+            
             const div = document.createElement('div');
             div.className = 'name-item';
-            
-            const format = Math.random() > 0.5 ? `${randomStart}${randomEnd}` : `${randomStart} of ${randomEnd}`;
-            div.innerHTML = `<span>${i + 1}.</span> ${format}`;
-            resultList.appendChild(div);
+            div.innerHTML = `
+                <span>${name}</span>
+                <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave('${name.replace(/'/g, "\\'")}', '${currentCategory}')">
+                    ${isSaved ? '★ Saved' : '☆ Save'}
+                </button>
+            `;
+            list.appendChild(div);
         }
-        
         loadRandomImage(currentCategory);
     }
 
-    function loadRandomImage(category) {
-        const imgElement = document.getElementById('creature-image');
-        const placeholder = document.getElementById('img-placeholder');
-        imgElement.style.display = 'none';
-        imgElement.src = "";
-        placeholder.style.display = 'none'; // Hide placeholder while loading
+    function toggleSave(name, category) {
+        const index = savedNames.findIndex(item => item.name === name && item.category === category);
+        
+        if (index > -1) {
+            savedNames.splice(index, 1);
+        } else {
+            savedNames.push({ name, category });
+        }
+        
+        localStorage.setItem('fantasyNamesSaved', JSON.stringify(savedNames));
+        renderSavedNames();
+        
+        // Update button state in list if visible
+        generateNames(); 
+    }
 
-        const validImages = [];
-        let checksCompleted = 0;
-        const maxImages = 10;
+    function renderSavedNames() {
+        const container = document.getElementById('saved-list-container');
+        container.innerHTML = '';
 
-        for (let i = 1; i <= maxImages; i++) {
-            const src = `${category}${i}.jpg`;
-            const testImg = new Image();
-            
-            testImg.onload = function() {
-                validImages.push(src);
-                checkCompletion();
-            };
-            
-            testImg.onerror = function() {
-                checkCompletion();
-            };
-            
-            testImg.src = src;
+        if (savedNames.length === 0) {
+            container.innerHTML = '<div style="text-align:center; color:#64748b; padding:10px;">No saved names yet.</div>';
+            return;
         }
 
-        function checkCompletion() {
-            checksCompleted++;
-            if (checksCompleted === maxImages) {
-                if (validImages.length > 0) {
-                    const randomSrc = validImages[Math.floor(Math.random() * validImages.length)];
-                    imgElement.src = randomSrc;
-                    imgElement.style.display = 'block';
+        // Group by category
+        const grouped = {};
+        savedNames.forEach(item => {
+            if (!grouped[item.category]) grouped[item.category] = [];
+            grouped[item.category].push(item.name);
+        });
+
+        // Render groups
+        for (const [cat, names] of Object.entries(grouped)) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'category-group';
+            
+            const header = document.createElement('div');
+            header.className = 'category-header';
+            header.innerText = `${cat.charAt(0).toUpperCase() + cat.slice(1)} Names (${names.length})`;
+            groupDiv.appendChild(header);
+
+            names.forEach(name => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'saved-item';
+                itemDiv.innerHTML = `
+                    <span>${name}</span>
+                    <span onclick="toggleSave('${name.replace(/'/g, "\\'")}', '${cat}')">✕</span>
+                `;
+                groupDiv.appendChild(itemDiv);
+            });
+
+            container.appendChild(groupDiv);
+        }
+    }
+
+    function clearSavedNames() {
+        if(confirm("Clear all saved names?")) {
+            savedNames = [];
+            localStorage.removeItem('fantasyNamesSaved');
+            renderSavedNames();
+            generateNames(); // Refresh buttons
+        }
+    }
+
+    function loadRandomImage(category) {
+        const img = document.getElementById('creature-image');
+        const placeholder = document.getElementById('img-placeholder');
+        img.style.display = 'none'; placeholder.style.display = 'none';
+        const valid = [];
+        let count = 0;
+        for(let i=1; i<=10; i++) {
+            const t = new Image();
+            t.onload = () => { valid.push(`${category}${i}.jpg`); check(); };
+            t.onerror = () => check();
+            t.src = `${category}${i}.jpg`;
+        }
+        function check() {
+            count++;
+            if(count===10) {
+                if(valid.length>0) {
+                    img.src = valid[Math.floor(Math.random()*valid.length)];
+                    img.style.display = 'block';
                 } else {
-                    // Show placeholder if no images found
                     placeholder.style.display = 'block';
-                    console.log(`No images found for ${category}`);
                 }
             }
         }
