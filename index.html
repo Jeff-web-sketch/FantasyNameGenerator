@@ -5,180 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy Name Generator</title>
     <style>
-        :root {
-            --primary: #38bdf8;
-            --primary-hover: #0ea5e9;
-            --accent: #f472b6;
-            --bg-overlay: rgba(15, 23, 42, 0.85);
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: url('bg.png') no-repeat center center fixed;
-            background-size: cover;
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        body::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-overlay); z-index: -1;
-        }
-
-        .container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 650px;
-            border: 1px solid var(--glass-border);
-            animation: slideUp 0.6s ease-out;
-            margin-bottom: 20px;
-        }
-
+        :root { --primary: #38bdf8; --primary-hover: #0ea5e9; --accent: #f472b6; --bg-overlay: rgba(15, 23, 42, 0.85); --glass-bg: rgba(30, 41, 59, 0.7); --glass-border: rgba(255, 255, 255, 0.1); --text-main: #f8fafc; --text-muted: #94a3b8; }
+        body { font-family: 'Segoe UI', sans-serif; background: url('bg.png') no-repeat center center fixed; background-size: cover; color: var(--text-main); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-overlay); z-index: -1; }
+        .container { background: var(--glass-bg); backdrop-filter: blur(12px); padding: 2rem; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; max-width: 650px; border: 1px solid var(--glass-border); animation: slideUp 0.6s ease-out; margin-bottom: 20px; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
         h1 { color: var(--primary); margin: 0 0 1rem 0; font-size: 1.8rem; text-align: center; }
-
-        /* Search Bar */
-        .search-box {
-            width: 100%;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--glass-border);
-            background: rgba(15, 23, 42, 0.6);
-            color: white;
-            font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-        }
+        .search-box { width: 100%; padding: 10px 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.6); color: white; font-size: 1rem; box-sizing: border-box; outline: none; }
         .search-box:focus { border-color: var(--primary); }
-
-        /* Quick Switcher */
-        .quick-switch {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            max-height: 100px;
-            overflow-y: auto;
-        }
-        .switch-btn {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--glass-border);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .switch-btn:hover, .switch-btn.active {
-            background: var(--primary); color: white; border-color: var(--primary);
-            transform: translateY(-2px);
-        }
+        .quick-switch { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; max-height: 100px; overflow-y: auto; }
+        .switch-btn { background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); color: var(--text-muted); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; white-space: nowrap; }
+        .switch-btn:hover, .switch-btn.active { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); }
         .switch-btn.hidden { display: none; }
-
-        .selector {
-            margin-bottom: 15px; padding: 12px; border-radius: 10px;
-            background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border);
-            color: white; font-size: 1.1rem; width: 100%; cursor: pointer; outline: none;
-        }
-
-        .generate-btn {
-            width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: none;
-            font-size: 1.1rem; font-weight: bold; cursor: pointer;
-            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: white; transition: transform 0.2s;
-        }
+        .selector { margin-bottom: 15px; padding: 12px; border-radius: 10px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); color: white; font-size: 1.1rem; width: 100%; cursor: pointer; outline: none; }
+        .generate-btn { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: white; transition: transform 0.2s; }
         .generate-btn:hover { transform: translateY(-2px); }
-
-        #result-list {
-            margin-top: 15px; text-align: left; background: rgba(15, 23, 42, 0.6);
-            padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border);
-            max-height: 300px; overflow-y: auto;
-        }
-        .name-item {
-            padding: 10px; border-bottom: 1px solid var(--glass-border);
-            font-size: 1.1rem; color: #e2e8f0; display: flex;
-            justify-content: space-between; align-items: center;
-        }
+        #result-list { margin-top: 15px; text-align: left; background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); max-height: 300px; overflow-y: auto; }
+        .name-item { padding: 10px; border-bottom: 1px solid var(--glass-border); font-size: 1.1rem; color: #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
         .name-item:last-child { border-bottom: none; }
-        
-        .save-btn {
-            background: transparent; border: 1px solid var(--text-muted);
-            color: var(--text-muted); padding: 4px 8px; border-radius: 5px;
-            cursor: pointer; font-size: 0.8rem; margin-left: 10px; transition: all 0.2s;
-        }
+        .save-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); padding: 4px 8px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-left: 10px; transition: all 0.2s; }
         .save-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(244, 114, 182, 0.1); }
         .save-btn.saved { background: var(--accent); color: white; border-color: var(--accent); }
-
-        /* Saved Section with Categories */
-        #saved-section {
-            margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.4);
-            padding: 15px; border-radius: 10px; border: 1px dashed var(--glass-border);
-            max-height: 300px; overflow-y: auto;
-        }
+        #saved-section { margin-top: 20px; text-align: left; background: rgba(15, 23, 42, 0.4); padding: 15px; border-radius: 10px; border: 1px dashed var(--glass-border); max-height: 300px; overflow-y: auto; }
         .category-group { margin-bottom: 15px; }
-        .category-header {
-            color: var(--primary); font-size: 0.9rem; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;
-            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;
-        }
-        .saved-item {
-            display: flex; justify-content: space-between; font-size: 0.95rem;
-            color: var(--text-muted); padding: 3px 0;
-        }
+        .category-header { color: var(--primary); font-size: 0.9rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px; }
+        .saved-item { display: flex; justify-content: space-between; font-size: 0.95rem; color: var(--text-muted); padding: 3px 0; }
         .saved-item span:last-child { color: #ef4444; cursor: pointer; }
-
-        #description-box {
-            margin-top: 15px; background: rgba(51, 65, 85, 0.6); padding: 12px;
-            border-radius: 8px; border-left: 4px solid var(--primary);
-            text-align: left; font-size: 0.9rem; color: #cbd5e1; min-height: 40px;
-        }
-
-        #image-container {
-            margin-top: 15px; height: 200px; display: flex; justify-content: center;
-            align-items: center; overflow: hidden; border-radius: 12px;
-            border: 2px solid var(--glass-border); background: rgba(15, 23, 42, 0.4);
-        }
+        #description-box { margin-top: 15px; background: rgba(51, 65, 85, 0.6); padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); text-align: left; font-size: 0.9rem; color: #cbd5e1; min-height: 40px; }
+        #image-container { margin-top: 15px; height: 200px; display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 12px; border: 2px solid var(--glass-border); background: rgba(15, 23, 42, 0.4); }
         #creature-image { max-width: 100%; max-height: 100%; object-fit: cover; display: none; }
         .no-image-placeholder { color: var(--text-muted); font-size: 3rem; opacity: 0.3; }
     </style>
 </head>
 <body>
-
 <div class="container">
     <h1 id="page-title">Loading...</h1>
-    
-    <!-- Search Bar -->
-    <input type="text" id="search-input" class="search-box" placeholder="🔍 Search generators (e.g., Dragon, Elf)..." onkeyup="filterGenerators()">
-
-    <!-- Quick Switcher -->
+    <input type="text" id="search-input" class="search-box" placeholder="🔍 Search generators..." onkeyup="filterGenerators()">
     <div class="quick-switch" id="quick-switch-container"></div>
-
     <select id="generator-selector" class="selector" onchange="changeGenerator()"></select>
-
     <button class="generate-btn" onclick="generateNames()">✨ Generate 10 Names</button>
-    
     <div id="result-list"></div>
-
-    <!-- Categorized Saved Names -->
     <div id="saved-section">
         <h3 style="margin:0 0 10px 0; color:var(--accent); font-size:1rem; display:flex; justify-content:space-between;">
             Saved Collection
@@ -186,9 +52,7 @@
         </h3>
         <div id="saved-list-container"></div>
     </div>
-    
     <div id="description-box"><strong>Info:</strong> <span id="desc-text">Loading data...</span></div>
-    
     <div id="image-container">
         <span class="no-image-placeholder" id="img-placeholder">🖼️</span>
         <img id="creature-image" src="" alt="Creature">
@@ -200,215 +64,105 @@
     let allData = {};
     let currentCategory = "horse";
     let isDataLoaded = false;
-    // Store as objects: { name: "FireDrake", category: "dragon" }
     let savedNames = JSON.parse(localStorage.getItem('fantasyNamesSaved')) || [];
 
     fetch(DATA_URL)
-        .then(response => {
-            if (!response.ok) throw new Error("Network error");
-            return response.json();
-        })
-        .then(data => {
-            allData = data;
-            isDataLoaded = true;
-            initUI();
-            renderSavedNames();
-        })
-        .catch(error => {
-            document.getElementById('desc-text').innerText = "Error loading data.";
-        });
+        .then(response => { if (!response.ok) throw new Error("Network error"); return response.json(); })
+        .then(data => { allData = data; isDataLoaded = true; initUI(); renderSavedNames(); })
+        .catch(error => { document.getElementById('desc-text').innerText = "Error loading data."; });
 
     function initUI() {
         const switchContainer = document.getElementById('quick-switch-container');
         const select = document.getElementById('generator-selector');
-        const categories = Object.keys(allData);
-
-        categories.forEach(cat => {
-            // Add to Dropdown
-            const opt = document.createElement('option');
-            opt.value = cat;
-            opt.innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
-            select.appendChild(opt);
-
-            // Add to Quick Switch
-            const btn = document.createElement('button');
-            btn.className = 'switch-btn';
-            btn.innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
-            btn.dataset.category = cat;
-            btn.onclick = () => {
-                select.value = cat;
-                changeGenerator();
-            };
+        Object.keys(allData).forEach(cat => {
+            const opt = document.createElement('option'); opt.value = cat; opt.innerText = cat.charAt(0).toUpperCase() + cat.slice(1); select.appendChild(opt);
+            const btn = document.createElement('button'); btn.className = 'switch-btn'; btn.innerText = cat.charAt(0).toUpperCase() + cat.slice(1); btn.dataset.category = cat;
+            btn.onclick = () => { select.value = cat; changeGenerator(); };
             switchContainer.appendChild(btn);
         });
-
         changeGenerator();
     }
 
     function filterGenerators() {
         const query = document.getElementById('search-input').value.toLowerCase();
-        const buttons = document.querySelectorAll('.switch-btn');
-        
-        buttons.forEach(btn => {
-            const name = btn.innerText.toLowerCase();
-            if (name.includes(query)) {
-                btn.classList.remove('hidden');
-            } else {
-                btn.classList.add('hidden');
-            }
+        document.querySelectorAll('.switch-btn').forEach(btn => {
+            btn.classList.toggle('hidden', !btn.innerText.toLowerCase().includes(query));
         });
     }
 
     function changeGenerator() {
         if (!isDataLoaded) return;
         currentCategory = document.getElementById('generator-selector').value;
-        
-        // Update Active Button
-        document.querySelectorAll('.switch-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.category === currentCategory);
-        });
-
-        // Clear UI
+        document.querySelectorAll('.switch-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.category === currentCategory));
         document.getElementById('result-list').innerHTML = '';
         document.getElementById('desc-text').innerHTML = '';
-        const img = document.getElementById('creature-image');
-        img.src = ""; img.style.display = 'none';
+        const img = document.getElementById('creature-image'); img.src = ""; img.style.display = 'none';
         document.getElementById('img-placeholder').style.display = 'block';
-
         const title = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
         document.getElementById('page-title').innerText = title + " Generator";
-        
-        const descs = {
-            horse: "Coat color & personality titles.",
-            treant: "Tree species & ancient titles.",
-            artifact: "Elemental adjectives & legendary nouns.",
-            centaur: "Equine strength & warrior themes.",
-            mermaid: "Ocean, tides & marine life.",
-            elf: "Melodic, nature & star inspired.",
-            dragon: "Fire, scales, wings & power.",
-            twilek: "Ryloth sounds & lekku styles.",
-            togruta: "Shili sounds & monastic styles.",
-            faun: "Goat traits & forest themes.",
-            conutaur: "Celestial magic & centaur power."
-        };
+        const descs = { horse: "Coat color & personality.", treant: "Tree species & ancient.", artifact: "Elemental & legendary.", centaur: "Equine & warrior.", mermaid: "Ocean & marine.", elf: "Melodic & nature.", dragon: "Fire & scales.", twilek: "Ryloth sounds.", togruta: "Shili sounds.", faun: "Goat & forest.", conutaur: "Celestial & centaur." };
         document.getElementById('desc-text').innerHTML = descs[currentCategory] || "Fantasy names.";
     }
 
     function generateNames() {
         if (!isDataLoaded) return;
-        const list = document.getElementById('result-list');
-        list.innerHTML = '';
-        const starts = allData[currentCategory].starts;
-        const ends = allData[currentCategory].ends;
-
+        const list = document.getElementById('result-list'); list.innerHTML = '';
+        const starts = allData[currentCategory].starts; const ends = allData[currentCategory].ends;
         for (let i = 0; i < 10; i++) {
             const s = starts[Math.floor(Math.random() * starts.length)];
             const e = ends[Math.floor(Math.random() * ends.length)];
             const name = Math.random() > 0.5 ? `${s}${e}` : `${s} of ${e}`;
-            
             const isSaved = savedNames.some(item => item.name === name && item.category === currentCategory);
-            
-            const div = document.createElement('div');
-            div.className = 'name-item';
-            div.innerHTML = `
-                <span>${name}</span>
-                <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave('${name.replace(/'/g, "\\'")}', '${currentCategory}')">
-                    ${isSaved ? '★ Saved' : '☆ Save'}
-                </button>
-            `;
-            list.appendChild(div);
+            const div = document.createElement('div'); div.className = 'name-item';
+            const btn = document.createElement('button');
+            btn.className = `save-btn ${isSaved ? 'saved' : ''}`;
+            btn.innerHTML = isSaved ? '★ Saved' : '☆ Save';
+            btn.onclick = function() { toggleSave(name, currentCategory); };
+            div.innerHTML = `<span>${name}</span>`; div.appendChild(btn); list.appendChild(div);
         }
         loadRandomImage(currentCategory);
     }
 
     function toggleSave(name, category) {
         const index = savedNames.findIndex(item => item.name === name && item.category === category);
-        
-        if (index > -1) {
-            savedNames.splice(index, 1);
-        } else {
-            savedNames.push({ name, category });
-        }
-        
+        if (index > -1) savedNames.splice(index, 1); else savedNames.push({ name, category });
         localStorage.setItem('fantasyNamesSaved', JSON.stringify(savedNames));
-        renderSavedNames();
-        
-        // Update button state in list if visible
-        generateNames(); 
+        renderSavedNames(); generateNames();
     }
 
     function renderSavedNames() {
-        const container = document.getElementById('saved-list-container');
-        container.innerHTML = '';
-
-        if (savedNames.length === 0) {
-            container.innerHTML = '<div style="text-align:center; color:#64748b; padding:10px;">No saved names yet.</div>';
-            return;
-        }
-
-        // Group by category
+        const container = document.getElementById('saved-list-container'); container.innerHTML = '';
+        if (savedNames.length === 0) { container.innerHTML = '<div style="text-align:center; color:#64748b; padding:10px;">No saved names yet.</div>'; return; }
         const grouped = {};
-        savedNames.forEach(item => {
-            if (!grouped[item.category]) grouped[item.category] = [];
-            grouped[item.category].push(item.name);
-        });
-
-        // Render groups
+        savedNames.forEach(item => { if (!grouped[item.category]) grouped[item.category] = []; grouped[item.category].push(item.name); });
         for (const [cat, names] of Object.entries(grouped)) {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = 'category-group';
-            
-            const header = document.createElement('div');
-            header.className = 'category-header';
-            header.innerText = `${cat.charAt(0).toUpperCase() + cat.slice(1)} Names (${names.length})`;
-            groupDiv.appendChild(header);
-
+            const groupDiv = document.createElement('div'); groupDiv.className = 'category-group';
+            const header = document.createElement('div'); header.className = 'category-header';
+            header.innerText = `${cat.charAt(0).toUpperCase() + cat.slice(1)} Names (${names.length})`; groupDiv.appendChild(header);
             names.forEach(name => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'saved-item';
-                itemDiv.innerHTML = `
-                    <span>${name}</span>
-                    <span onclick="toggleSave('${name.replace(/'/g, "\\'")}', '${cat}')">✕</span>
-                `;
-                groupDiv.appendChild(itemDiv);
+                const itemDiv = document.createElement('div'); itemDiv.className = 'saved-item';
+                itemDiv.innerHTML = `<span>${name}</span>`;
+                const delBtn = document.createElement('span'); delBtn.innerText = '✕'; delBtn.style.color = '#ef4444'; delBtn.style.cursor = 'pointer';
+                delBtn.onclick = function() { toggleSave(name, cat); };
+                itemDiv.appendChild(delBtn); groupDiv.appendChild(itemDiv);
             });
-
             container.appendChild(groupDiv);
         }
     }
 
-    function clearSavedNames() {
-        if(confirm("Clear all saved names?")) {
-            savedNames = [];
-            localStorage.removeItem('fantasyNamesSaved');
-            renderSavedNames();
-            generateNames(); // Refresh buttons
-        }
-    }
+    function clearSavedNames() { if(confirm("Clear all?")) { savedNames = []; localStorage.removeItem('fantasyNamesSaved'); renderSavedNames(); generateNames(); } }
 
     function loadRandomImage(category) {
-        const img = document.getElementById('creature-image');
-        const placeholder = document.getElementById('img-placeholder');
+        const img = document.getElementById('creature-image'); const placeholder = document.getElementById('img-placeholder');
         img.style.display = 'none'; placeholder.style.display = 'none';
-        const valid = [];
-        let count = 0;
+        const valid = []; let count = 0;
         for(let i=1; i<=10; i++) {
             const t = new Image();
             t.onload = () => { valid.push(`${category}${i}.jpg`); check(); };
             t.onerror = () => check();
             t.src = `${category}${i}.jpg`;
         }
-        function check() {
-            count++;
-            if(count===10) {
-                if(valid.length>0) {
-                    img.src = valid[Math.floor(Math.random()*valid.length)];
-                    img.style.display = 'block';
-                } else {
-                    placeholder.style.display = 'block';
-                }
-            }
-        }
+        function check() { count++; if(count===10) { if(valid.length>0) { img.src = valid[Math.floor(Math.random()*valid.length)]; img.style.display = 'block'; } else { placeholder.style.display = 'block'; } } }
     }
 </script>
 </body>
