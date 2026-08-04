@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Script Info</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: #1e293b; padding: 2.5rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); max-width: 600px; width: 90%; border: 1px solid #334155; text-align: center; }
+        h1 { color: #38bdf8; margin-bottom: 1rem; }
+        p { line-height: 1.6; color: #cbd5e1; margin-bottom: 1.5rem; }
+        .code-box { background: #0f172a; padding: 15px; border-radius: 8px; text-align: left; font-family: monospace; font-size: 0.9rem; color: #94a3b8; margin-bottom: 20px; border: 1px solid #334155; }
+        
+        /* Download Button Style */
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(22, 163, 74, 0.4);
+        }
+        .back-link { display: block; margin-top: 20px; color: #94a3b8; text-decoration: none; }
+        .back-link:hover { color: #38bdf8; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🐍 Fantasy Name Generator Script</h1>
+    <p>
+        This Python script fetches name data directly from our GitHub repository and generates unique fantasy names in your terminal. 
+        It supports all generators (Dragon, Elf, Centaur, etc.) and can export your saved names to a text file.
+    </p>
+    
+    <div class="code-box">
+        <strong>Requirements:</strong><br>
+        pip install requests<br><br>
+        <strong>Run:</strong><br>
+        python generator.py
+    </div>
+
+    <!-- DOWNLOAD BUTTON -->
+    <!-- Replace YOUR_USERNAME and YOUR_REPO below -->
+    <a href="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/generator.py" 
+       class="download-btn" 
+       download="generator.py">
+       ⬇ Download generator.py
+    </a>
+
+    <a href="index.html" class="back-link">← Back to Generator</a>
+</div>
+</body>
+</html>   
