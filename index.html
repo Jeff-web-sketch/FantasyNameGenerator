@@ -226,15 +226,19 @@
 <div class="container">
     <h1 id="page-title">Loading...</h1>
     
-    <select id="generator-selector" class="selector" onchange="changeGenerator()">
-        <option value="horse">Horse Names</option>
-        <option value="treant">Tree People Names</option>
-        <option value="artifact">Special Item Names</option>
-        <option value="centaur">Centaur Names</option>
-        <option value="mermaid">Mermaid Names</option>
-        <option value="conutaur">Conutaur Names</option>
-        <option value="elf">Elf Names</option>
-    </select>
+<select id="generator-selector" class="selector" onchange="changeGenerator()">
+    <option value="horse">Horse Names</option>
+    <option value="treant">Tree People Names</option>
+    <option value="artifact">Special Item Names</option>
+    <option value="centaur">Centaur Names</option>
+    <option value="mermaid">Mermaid Names</option>
+    <option value="conutaur">Conutaur Names</option>
+    <option value="elf">Elf Names</option>
+    <option value="twilek">Twi'lek Names</option>
+    <option value="togruta">Togruta Names</option>
+    <option value="faun">Faun Names</option>
+    <option value="dragon">Dragon Names</option>
+</select>   
 
     <button onclick="generateNames()">✨ Generate 10 Names</button>
     
@@ -296,7 +300,10 @@
         if(currentCategory === "mermaid") desc = "Names evoking the ocean, tides, and marine life.";
         if(currentCategory === "conutaur") desc = "Names mixing celestial unicorn magic with centaur power.";
         if(currentCategory === "elf") desc = "Melodic names inspired by nature, stars, and ancient lore.";
-        document.getElementById('desc-text').innerHTML = `<strong>${title}:</strong> ${desc}`;
+if(currentCategory === "twilek") desc = "Names from Ryloth, often featuring soft vowels and lekku-inspired sounds.";
+if(currentCategory === "togruta") desc = "Names from Shili, often with sharp consonants and monastic influences.";
+if(currentCategory === "faun") desc = "Names blending goat-like traits with forest and nature themes.";
+if(currentCategory === "dragon") desc = "Names evoking fire, scales, wings, and ancient power.";   
 
         document.getElementById('result-list').innerHTML = '';
         const imgElement = document.getElementById('creature-image');
