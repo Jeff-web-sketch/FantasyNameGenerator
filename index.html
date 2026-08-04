@@ -29,10 +29,13 @@
     
     <!-- Generator Selector -->
     <select id="generator-selector" class="selector" onchange="changeGenerator()">
-        <option value="horse">Horse Names</option>
-        <option value="treant">Tree People Names</option>
-        <option value="artifact">Special Item Names</option>
-    </select>
+    <option value="horse">Horse Names</option>
+    <option value="treant">Tree People Names</option>
+    <option value="artifact">Special Item Names</option>
+    <option value="centaur">Centaur Names</option>
+    <option value="mermaid">Mermaid Names</option>
+    <option value="conutaur">Conutaur Names</option>
+</select>   
 
     <button onclick="generateNames()">✨ Generate 10 Names</button>
     <div id="result-list"></div>
@@ -44,7 +47,8 @@
 <script>
     // --- CONFIGURATION ---
     // REPLACE WITH YOUR GITHUB PAGES URL
-    const DATA_URL = "https://YOUR_USERNAME.github.io/YOUR_REPO/data.json";
+    const DATA_URL = "https://raw.githubusercontent.com/jeff-web-sketch/FantasyNameGenerator/main/data.json";
+<script>
     
     let allData = {};
     let currentCategory = "horse";
@@ -61,32 +65,33 @@
         })
         .catch(error => {
             console.error("Error fetching data:", error);
-            document.getElementById('desc-text').innerText = "Error loading data.json. Check console for details.";
+            document.getElementById('desc-text').innerText = "Error loading data.json. Check console.";
         });
 
     function initGenerator() {
-        changeGenerator(); // Load default
+        changeGenerator();
     }
 
     function changeGenerator() {
         currentCategory = document.getElementById('generator-selector').value;
         const data = allData[currentCategory];
         
-        // Update UI Text
         const title = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
         document.getElementById('page-title').innerText = title + " Generator";
         document.getElementById('desc-title').innerText = title;
         
-        // Update Description based on category
         let desc = "";
         if(currentCategory === "horse") desc = "<strong>Horse:</strong> Names reflect coat color, personality, or majestic titles.";
-        if(currentCategory === "treant") desc = "<strong>Tree People:</strong> Names combine tree species with ancient titles or body parts.";
+        if(currentCategory === "treant") desc = "<strong>Tree People:</strong> Names combine tree species with ancient titles.";
         if(currentCategory === "artifact") desc = "<strong>Special Items:</strong> Names use elemental adjectives and legendary nouns.";
+        if(currentCategory === "centaur") desc = "<strong>Centaur:</strong> Names blend equine strength with warrior or nature themes.";
+        if(currentCategory === "mermaid") desc = "<strong>Mermaid:</strong> Names evoke the ocean, tides, and marine life.";
+        if(currentCategory === "conutaur") desc = "<strong>Conutaur:</strong> Names mix celestial unicorn magic with centaur power.";
         document.getElementById('desc-text').innerHTML = desc;
 
-        // Clear previous results
         document.getElementById('result-list').innerHTML = '';
         document.getElementById('creature-image').style.display = 'none';
+        document.getElementById('creature-image').src = "";
     }
 
     function generateNames() {
@@ -102,27 +107,55 @@
             const randomEnd = ends[Math.floor(Math.random() * ends.length)];
             const div = document.createElement('div');
             div.className = 'name-item';
-            
-            // Random format: "StartEnd" or "Start of End"
             const format = Math.random() > 0.5 ? `${randomStart}${randomEnd}` : `${randomStart} of ${randomEnd}`;
             div.innerHTML = `<span>${i + 1}.</span> ${format}`;
             resultList.appendChild(div);
         }
         
-        // Try to load image (ensure horse.jpg, treant.jpg, artifact.jpg exist in repo)
+        loadRandomImage(currentCategory);
+    }
+
+    function loadRandomImage(category) {
         const imgElement = document.getElementById('creature-image');
-        const imageList = [`${currentCategory}.jpg`, `${currentCategory}2.jpg`];
-        
-        // Simple image loader
-        let loaded = false;
-        for(let src of imageList) {
+        imgElement.style.display = 'none';
+        imgElement.src = "";
+
+        const validImages = [];
+        let checksCompleted = 0;
+        const maxImages = 10;
+
+        // Check for image1.jpg to image10.jpg
+        for (let i = 1; i <= maxImages; i++) {
+            const src = `${category}${i}.jpg`;
             const testImg = new Image();
-            testImg.onload = function() { 
-                if(!loaded) { imgElement.src = src; imgElement.style.display = 'block'; loaded = true; } 
+            
+            testImg.onload = function() {
+                validImages.push(src);
+                checkCompletion();
             };
+            
+            testImg.onerror = function() {
+                checkCompletion();
+            };
+            
             testImg.src = src;
         }
+
+        function checkCompletion() {
+            checksCompleted++;
+            if (checksCompleted === maxImages) {
+                if (validImages.length > 0) {
+                    // Pick a random image from the found ones
+                    const randomSrc = validImages[Math.floor(Math.random() * validImages.length)];
+                    imgElement.src = randomSrc;
+                    imgElement.style.display = 'block';
+                } else {
+                    // No images found, keep box blank
+                    console.log(`No images found for ${category}`);
+                }
+            }
+        }
     }
-</script>
+</script>   
 </body>
 </html>   
