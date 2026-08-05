@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: fantasy-name-generator
+Version: 1.0.0
+Summary: A library for generating fantasy names (Dragons, Elves, etc.)
+Home-page: https://github.com/jeff-web-sketch/FantasyNameGenerator
+Author: Jeff
+Requires-Python: >=3.6

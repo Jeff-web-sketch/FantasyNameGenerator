@@ -1,0 +1,7 @@
+setup.py
+fantasy_name_generator.egg-info/PKG-INFO
+fantasy_name_generator.egg-info/SOURCES.txt
+fantasy_name_generator.egg-info/dependency_links.txt
+fantasy_name_generator.egg-info/entry_points.txt
+fantasy_name_generator.egg-info/requires.txt
+fantasy_name_generator.egg-info/top_level.txt
