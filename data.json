@@ -42,5 +42,21 @@
   "dragon": {
     "starts": ["Drac", "Ignis", "Pyro", "Flame", "Ember", "Ash", "Smoke", "Soot", "Char", "Scorch", "Blaze", "Inferno", "Combust", "Ignite", "Kindle", "Stoke", "Fume", "Vapor", "Mist", "Haze", "Smog", "Cloud", "Steam", "Gas", "Air", "Wind", "Breeze", "Gale", "Storm", "Tempest", "Hurricane", "Tornado", "Typhoon", "Cyclone", "Whirlwind", "Zephyr", "Squall", "Gust", "Puff", "Blast", "Burst", "Explosion", "Detonation", "Eruption", "Ejection", "Emission", "Discharge", "Release", "Vent", "Exhaust", "Fume", "Smoke", "Soot", "Ash", "Dust", "Powder", "Grit", "Sand", "Gravel", "Pebble", "Rock", "Stone", "Boulder", "Mountain", "Hill", "Valley", "Canyon", "Gorge", "Ravine", "Chasm", "Crevice", "Crack", "Fissure", "Split", "Gap", "Hole", "Cave", "Cavern", "Grotto", "Tunnel", "Passage", "Corridor", "Hall", "Chamber", "Room", "Cell", "Dungeon", "Prison", "Jail", "Cellar", "Basement", "Attic", "Loft", "Garret", "Tower", "Spire", "Turret", "Battlement", "Rampart", "Wall", "Gate", "Door", "Window", "Roof", "Floor", "Ceiling", "Foundation", "Base"],
     "ends": ["fire", "flame", "blaze", "inferno", "combustion", "ignition", "kindling", "stoking", "fuming", "vaporizing", "misting", "hazing", "smogging", "clouding", "steaming", "gassing", "airing", "winding", "breezing", "galing", "storming", "tempesting", "hurricaning", "tornadoing", "typhoning", "cycloning", "whirlwinding", "zephyring", "squalling", "gusting", "puffing", "blasting", "bursting", "exploding", "detonating", "erupting", "ejecting", "emitting", "discharging", "releasing", "venting", "exhausting", "fuming", "smoking", "sooting", "ashing", "dusting", "powdering", "gritting", "sanding", "graveling", "pebbling", "rocking", "stoning", "bouldering", "mountaining", "hilling", "valleying", "canyoning", "gorging", "ravining", "chasm", "crevicing", "cracking", "fissuring", "splitting", "gapping", "holing", "caving", "caverning", "grottoing", "tunneling", "passaging", "corridoring", "halling", "chambering", "rooming", "celling", "dungeoning", "prisoning", "jailing", "cellaring", "basementing", "atticing", "lofting", "garreting", "towering", "spiring", "turreting", "battlementing", "ramparting", "walling", "gating", "dooring", "windowing", "roofing", "flooring", "ceiling", "foundationing", "basing"]
-  }
+  },
+  "hydra": {
+    "starts": ["Hyd", "Ser", "Vip", "Cob", "Asp", "Pyr", "Ven", "Tox", "Sli", "Wrig", "Mul", "Head", "Fang", "Venom", "Toxin", "Poison", "Acid", "Bite", "Strike", "Coil"],
+    "ends": ["ra", "os", "us", "is", "as", "oth", "ath", "ax", "on", "en", "head", "fang", "venom", "toxin", "poison", "acid", "bite", "strike", "coil", "serpent"]
+  },
+  "griffin": {
+    "starts": ["Gry", "Aer", "Zep", "Sky", "Wind", "Cloud", "Storm", "Thunder", "Light", "Sun", "Moon", "Star", "Eagle", "Hawk", "Falcon", "Talon", "Wing", "Feather", "Beak", "Claw"],
+    "ends": ["phon", "os", "us", "is", "as", "ax", "on", "en", "sky", "wind", "cloud", "storm", "thunder", "light", "sun", "moon", "star", "eagle", "hawk", "falcon"]
+  },
+  "sphinx": {
+    "starts": ["Sph", "Rid", "My", "Enig", "Puz", "Rid", "Myth", "Leg", "Anc", "Old", "Wise", "Sage", "Oracle", "Seer", "Prophet", "Guard", "Keep", "Watch", "Sent", "Silent"],
+    "ends": ["inx", "os", "us", "is", "as", "ax", "on", "en", "riddle", "myth", "enigma", "puzzle", "legend", "ancient", "old", "wise", "sage", "oracle", "seer", "prophet"]
+  },
+  "chimera": {
+    "starts": ["Chi", "Mer", "Ame", "Lio", "Goat", "Serp", "Mix", "Hyb", "Mut", "Fuse", "Blend", "Amal", "Syn", "Cron", "Graft", "Splice", "Patch", "Quilt", "Mosaic", "Kaleid"],
+    "ends": ["ra", "os", "us", "is", "as", "ax", "on", "en", "lion", "goat", "serpent", "dragon", "beast", "monster", "hybrid", "mutant", "fusion", "blend", "amalgam", "synthesis"]
+  }   
 }   
